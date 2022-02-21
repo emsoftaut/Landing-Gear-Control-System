@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Display" Comment="Basic FB with empty ECC">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Fan" Date="2022-01-09">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="SHOW_UP" Type="Event" Comment="">
+				<With Var="gear_lever_status"/>
+			</Event>
+			<Event Name="SHOW_DOWN" Type="Event" Comment="">
+				<With Var="gear_lever_status"/>
+			</Event>
+			<Event Name="SHOW_SET_STATUS" Type="Event" Comment="">
+				<With Var="set_gear_lever_status"/>
+			</Event>
+			<Event Name="SHOW_MSG" Type="Event" Comment="">
+				<With Var="msg_light"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="gear_lever_status" Type="REAL" Comment=""/>
+			<VarDeclaration Name="set_gear_lever_status" Type="REAL" Comment=""/>
+			<VarDeclaration Name="msg_light" Type="STRING" Comment=""/>
+			<VarDeclaration Name="mac_address" Type="STRING" Comment=""/>
+			<VarDeclaration Name="port" Type="LINT" Comment=""/>
+			<VarDeclaration Name="TI" Type="STRING" Comment=""/>
+		</InputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550.0" y="425.0">
+			</ECState>
+		</ECC>
+	</BasicFB>
+</FBType>

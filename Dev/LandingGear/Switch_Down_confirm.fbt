@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Switch_Down_confirm" Comment="Basic FB with empty ECC">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Fan" Date="2022-01-09">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="CNF_STATUS_COMFIRM" Type="Event" Comment="">
+				<With Var="G"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO1" Type="Event" Comment="">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="G" Type="BOOL" Comment=""/>
+		</InputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550.0" y="425.0">
+			</ECState>
+		</ECC>
+	</BasicFB>
+</FBType>

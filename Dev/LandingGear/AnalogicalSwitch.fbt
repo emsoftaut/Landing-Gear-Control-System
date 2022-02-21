@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AnalogicalSwitch" Comment="Basic FB with empty ECC">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Fan" Date="2021-12-09">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment=" Initialise the Open and Close at the event">
+			</Event>
+			<Event Name="OPEN" Type="Event" Comment="Event tick Open message  when pilot press the button">
+			</Event>
+			<Event Name="CLOSE" Type="Event" Comment="Event tick Open message  when pilot press the button">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="SHOW_ASS_STATUS" Type="Event" Comment="">
+			</Event>
+			<Event Name="SHOW_TIMES_ALARM" Type="Event" Comment="">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="set_times_alarm" Type="STRING" Comment="Static input paramter to set the alarm"/>
+			<VarDeclaration Name="set_status" Type="STRING" Comment="status get from gear lever"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="show_gear_analogical_status" Type="STRING" Comment="Final status display"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550.0" y="425.0">
+			</ECState>
+		</ECC>
+	</BasicFB>
+</FBType>

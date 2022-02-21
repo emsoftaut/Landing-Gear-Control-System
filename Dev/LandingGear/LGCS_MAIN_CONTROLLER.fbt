@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="LGCS_MAIN_CONTROLLER" Comment="Basic FB with empty ECC">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Fan" Date="2022-01-11">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="">
+			</Event>
+			<Event Name="CYCLE" Type="Event" Comment="">
+			</Event>
+			<Event Name="CMD_UP_COMFIRM" Type="Event" Comment="">
+				<With Var="status"/>
+			</Event>
+			<Event Name="CMD_DOWN_COMFIRM" Type="Event" Comment="">
+				<With Var="status"/>
+			</Event>
+			<Event Name="ANALOGICAL_OPEN_COMFIRM" Type="Event" Comment="">
+			</Event>
+			<Event Name="ANALOGICAL_CLOSE_COMFIRM_1" Type="Event" Comment="">
+			</Event>
+			<Event Name="DOOR_OPEN_COMFIRM" Type="Event" Comment="">
+			</Event>
+			<Event Name="DOOR_CLOSE_COMFIRM" Type="Event" Comment="">
+			</Event>
+			<Event Name="ERROR" Type="Event" Comment="">
+				<With Var="error_code"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="GET_GL_STATUS" Type="Event" Comment="">
+			</Event>
+			<Event Name="CNF_GL_STATUS" Type="Event" Comment="">
+				<With Var="gear_lever_status"/>
+			</Event>
+			<Event Name="CNF_SET_GL_STATUS_LIGHT" Type="Event" Comment="">
+				<With Var="set_gear_lever_status"/>
+			</Event>
+			<Event Name="CNF_MSG" Type="Event" Comment="">
+				<With Var="gear_lever_msg"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="status" Type="REAL" Comment=""/>
+			<VarDeclaration Name="error_code" Type="INT" Comment=""/>
+			<VarDeclaration Name="TI" Type="STRING" Comment=""/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="gear_lever_status" Type="REAL" Comment=""/>
+			<VarDeclaration Name="set_gear_lever_status" Type="REAL" Comment=""/>
+			<VarDeclaration Name="gear_lever_msg" Type="STRING" Comment=""/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="500.0" y="375.0">
+			</ECState>
+			<ECState Name="NORMAL" Comment="" x="418.75" y="1443.75">
+			</ECState>
+			<ECState Name="INIT" Comment="" x="1375.0" y="375.0">
+				<ECAction Algorithm="initialize" Output="CNF_GL_STATUS"/>
+				<ECAction Output="CNF_SET_GL_STATUS_LIGHT"/>
+				<ECAction Output="CNF_GL_STATUS"/>
+			</ECState>
+			<ECState Name="CYCLE" Comment="" x="1375.0" y="875.0">
+				<ECAction Algorithm="CYCLE" Output="GET_GL_STATUS"/>
+			</ECState>
+			<ECState Name="CMD_UP_COMFIRM" Comment="" x="1375.0" y="1250.0">
+				<ECAction Algorithm="GearLeverSetUp" Output="CNF_SET_GL_STATUS_LIGHT"/>
+			</ECState>
+			<ECState Name="CMD_DOWN_COMFIRM" Comment="" x="1375.0" y="1625.0">
+				<ECAction Algorithm="GearLeverSetDown" Output="CNF_SET_GL_STATUS_LIGHT"/>
+			</ECState>
+			<ECState Name="ERROR" Comment="" x="1375.0" y="2000.0">
+				<ECAction Algorithm="DisplayError" Output="CNF_MSG"/>
+			</ECState>
+			<ECTransition Source="START" Destination="INIT" Condition="INIT" Comment="" x="1087.5" y="437.5"/>
+			<ECTransition Source="INIT" Destination="NORMAL" Condition="1" Comment="" x="700.0" y="806.25"/>
+			<ECTransition Source="NORMAL" Destination="CYCLE" Condition="CYCLE" Comment="" x="768.75" y="931.25"/>
+			<ECTransition Source="CYCLE" Destination="NORMAL" Condition="1" Comment="" x="812.5" y="1031.25"/>
+			<ECTransition Source="NORMAL" Destination="CMD_UP_COMFIRM" Condition="CMD_UP_COMFIRM" Comment="" x="937.5" y="1193.75"/>
+			<ECTransition Source="CMD_UP_COMFIRM" Destination="NORMAL" Condition="1" Comment="" x="912.5" y="1337.5"/>
+			<ECTransition Source="NORMAL" Destination="CMD_DOWN_COMFIRM" Condition="CMD_DOWN_COMFIRM" Comment="" x="1162.5" y="1493.75"/>
+			<ECTransition Source="CMD_DOWN_COMFIRM" Destination="NORMAL" Condition="1" Comment="" x="1075.0" y="1681.25"/>
+			<ECTransition Source="NORMAL" Destination="ERROR" Condition="ERROR" Comment="" x="1012.5" y="1912.5"/>
+			<ECTransition Source="ERROR" Destination="NORMAL" Condition="1" Comment="" x="887.5" y="2025.0"/>
+		</ECC>
+		<Algorithm Name="initialize" Comment="Initialization algorithm">
+			<Other Language="AnyText"><![CDATA[	cout << "[LGCS_MAIN_CONTROLLER1] alg_initialize()\n";
+	// Set default the Gear lever status
+	gear_lever_status() = false;
+	
+	]]></Other>
+		</Algorithm>
+		<Algorithm Name="CYCLE" Comment="Cycle controller">
+			<Other Language="AnyText"><![CDATA[]]></Other>
+		</Algorithm>
+		<Algorithm Name="GearLeverSetUp" Comment="Gear lever set up">
+			<Other Language="AnyText"><![CDATA[	cout << "[Z_CONTROLLER2] alg_SetUp\n"
+	SET_TEMP() = SET_TEMP();]]></Other>
+		</Algorithm>
+		<Algorithm Name="GearLeverSetDown" Comment="Gear lever set down">
+			<Other Language="AnyText"><![CDATA[	cout << "[Z_CONTROLLER2] alg_SetDown\n"
+	SET_TEMP() = SET_TEMP();
+]]></Other>
+		</Algorithm>
+		<Algorithm Name="DisplayError" Comment="Report error">
+			<Other Language="AnyText"><![CDATA[]]></Other>
+		</Algorithm>
+	</BasicFB>
+</FBType>

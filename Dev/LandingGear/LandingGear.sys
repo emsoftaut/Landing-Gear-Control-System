@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<System Name="LandingGear" Comment="">
+	<VersionInfo Version="1.0" Author="Fan" Date="2021-12-09">
+	</VersionInfo>
+	<Application Name="LandingGearApp" Comment="">
+		<SubAppNetwork>
+			<FB Name="E_CYCLE" Type="E_CYCLE" Comment="" x="7125.0" y="-2750.0">
+				<Parameter Name="DT" Value="T#250ms"/>
+			</FB>
+			<FB Name="Dectect_Set_Switch_UP" Type="Dectect_Set_Switch" Comment="" x="4375.0" y="-1750.0">
+				<Parameter Name="ip_address" Value="127.0.0.1"/>
+				<Parameter Name="port" Value="62501"/>
+				<Parameter Name="PARAMS" Value="2"/>
+				<Parameter Name="TI" Value="QR1"/>
+			</FB>
+			<FB Name="Dectect_Set_Switch_Down" Type="Dectect_Set_Switch" Comment="" x="4375.0" y="-250.0">
+				<Parameter Name="ip_address" Value="127.0.0.1"/>
+				<Parameter Name="port" Value="62501"/>
+				<Parameter Name="PARAMS" Value="1"/>
+				<Parameter Name="TI" Value="QR2"/>
+			</FB>
+			<FB Name="E_SWITCH_UP_COMFIRM" Type="E_SWITCH" Comment="" x="6500.0" y="-1250.0">
+			</FB>
+			<FB Name="E_SWITCH_DOWN_CONFIRM" Type="E_SWITCH" Comment="" x="6500.0" y="-125.0">
+			</FB>
+			<FB Name="LGCS_MAIN_CONTROLLER" Type="LGCS_MAIN_CONTROLLER" Comment="" x="8375.0" y="-625.0">
+				<Parameter Name="TI" Value="QR3"/>
+			</FB>
+			<FB Name="LOWER_PORT_GEAR" Type="SWITCHsim" Comment="" x="9000.0" y="1750.0">
+				<Parameter Name="address" Value="127.0.0.1"/>
+				<Parameter Name="port" Value="62501"/>
+				<Parameter Name="params" Value="5"/>
+				<Parameter Name="TI" Value="TQR1.2"/>
+			</FB>
+			<FB Name="LOWER_STARBOARD_GEAR" Type="SWITCHsim" Comment="" x="11250.0" y="1250.0">
+				<Parameter Name="address" Value="127.0.0.1"/>
+				<Parameter Name="port" Value="62501"/>
+				<Parameter Name="params" Value="6"/>
+				<Parameter Name="TI" Value="TQR2.2"/>
+			</FB>
+			<FB Name="RETRACT_PORT_GEAR" Type="SWITCHsim" Comment="" x="9000.0" y="-2875.0">
+				<Parameter Name="address" Value="127.0.0.1"/>
+				<Parameter Name="port" Value="62501"/>
+				<Parameter Name="params" Value="3"/>
+				<Parameter Name="TI" Value="TQR1.1"/>
+			</FB>
+			<FB Name="RETRACT_STARBOARD_GEAR" Type="SWITCHsim" Comment="" x="11250.0" y="-2875.0">
+				<Parameter Name="address" Value="127.0.0.1"/>
+				<Parameter Name="port" Value="62501"/>
+				<Parameter Name="params" Value="4"/>
+				<Parameter Name="TI" Value="TQR2.1"/>
+			</FB>
+			<EventConnections>
+				<Connection Source="E_CYCLE.EO" Destination="Dectect_Set_Switch_UP.READ_GL_STATUS" Comment="" dx1="75.0" dx2="100.0" dy="-500.0"/>
+				<Connection Source="E_CYCLE.EO" Destination="Dectect_Set_Switch_Down.READ_GL_STATUS" Comment="" dx1="256.25" dx2="556.25" dy="-650.0"/>
+				<Connection Source="Dectect_Set_Switch_UP.CNF_SET_STATUS" Destination="E_SWITCH_UP_COMFIRM.EI" Comment="" dx1="275.0"/>
+				<Connection Source="E_CYCLE.EO" Destination="LGCS_MAIN_CONTROLLER.CYCLE" Comment="" dx1="200.0" dx2="200.0" dy="0.0"/>
+				<Connection Source="E_SWITCH_UP_COMFIRM.EO1" Destination="LGCS_MAIN_CONTROLLER.CMD_UP_COMFIRM" Comment="" dx1="550.0" dx2="775.0" dy="0.0"/>
+				<Connection Source="E_SWITCH_DOWN_CONFIRM.EO1" Destination="LGCS_MAIN_CONTROLLER.CMD_DOWN_COMFIRM" Comment="" dx1="300.0" dx2="750.0" dy="0.0"/>
+				<Connection Source="Dectect_Set_Switch_Down.CNF_SET_STATUS" Destination="E_SWITCH_DOWN_CONFIRM.EI" Comment="" dx1="187.5"/>
+				<Connection Source="E_SWITCH_DOWN_CONFIRM.EO1" Destination="LOWER_PORT_GEAR.READ" Comment="" dx1="75.0" dx2="1106.25" dy="750.0"/>
+				<Connection Source="E_SWITCH_DOWN_CONFIRM.EO1" Destination="LOWER_STARBOARD_GEAR.READ" Comment="" dx1="812.5" dx2="812.5" dy="0.0"/>
+				<Connection Source="E_SWITCH_UP_COMFIRM.EO1" Destination="RETRACT_PORT_GEAR.READ" Comment="" dx1="837.5" dx2="837.5" dy="0.0"/>
+				<Connection Source="E_SWITCH_UP_COMFIRM.EO1" Destination="RETRACT_STARBOARD_GEAR.READ" Comment="" dx1="3612.5" dx2="3612.5" dy="0.0"/>
+			</EventConnections>
+			<DataConnections>
+				<Connection Source="Dectect_Set_Switch_UP.in" Destination="E_SWITCH_UP_COMFIRM.G" Comment="" dx1="187.5"/>
+				<Connection Source="Dectect_Set_Switch_Down.in" Destination="E_SWITCH_DOWN_CONFIRM.G" Comment="" dx1="187.5"/>
+			</DataConnections>
+		</SubAppNetwork>
+	</Application>
+	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="375.0" y="750.0">
+		<Parameter Name="MGR_ID" Value="&quot;localhost:61499&quot;"/>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC" Comment="device profile"/>
+		<Attribute Name="Color" Type="STRING" Value="115,210,22" Comment="color"/>
+		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
+			<FBNetwork>
+				<FB Name="Dectect_Set_Switch_UP" Type="Dectect_Set_Switch" Comment="" x="3337.5" y="-1812.5">
+					<Parameter Name="ip_address" Value="127.0.0.1"/>
+					<Parameter Name="port" Value="62501"/>
+					<Parameter Name="PARAMS" Value="2"/>
+					<Parameter Name="TI" Value="QR1"/>
+				</FB>
+				<FB Name="Dectect_Set_Switch_Down" Type="Dectect_Set_Switch" Comment="" x="3250.0" y="500.0">
+					<Parameter Name="ip_address" Value="127.0.0.1"/>
+					<Parameter Name="port" Value="62501"/>
+					<Parameter Name="PARAMS" Value="1"/>
+					<Parameter Name="TI" Value="QR2"/>
+				</FB>
+				<FB Name="E_CYCLE" Type="E_CYCLE" Comment="" x="6500.0" y="-2250.0">
+					<Parameter Name="DT" Value="T#250ms"/>
+				</FB>
+				<FB Name="E_SWITCH_UP_COMFIRM" Type="E_SWITCH" Comment="" x="6375.0" y="-875.0">
+				</FB>
+				<FB Name="E_SWITCH_DOWN_CONFIRM" Type="E_SWITCH" Comment="" x="6375.0" y="-125.0">
+				</FB>
+				<FB Name="LGCS_MAIN_CONTROLLER" Type="LGCS_MAIN_CONTROLLER" Comment="" x="8875.0" y="-1250.0">
+					<Parameter Name="TI" Value="QR3"/>
+				</FB>
+				<FB Name="LOWER_PORT_GEAR" Type="SWITCHsim" Comment="" x="7000.0" y="1375.0">
+					<Parameter Name="address" Value="127.0.0.1"/>
+					<Parameter Name="port" Value="62501"/>
+					<Parameter Name="params" Value="5"/>
+					<Parameter Name="TI" Value="TQR1.2"/>
+				</FB>
+				<FB Name="LOWER_STARBOARD_GEAR" Type="SWITCHsim" Comment="" x="8625.0" y="1375.0">
+					<Parameter Name="address" Value="127.0.0.1"/>
+					<Parameter Name="port" Value="62501"/>
+					<Parameter Name="params" Value="6"/>
+					<Parameter Name="TI" Value="TQR2.2"/>
+				</FB>
+				<FB Name="RETRACT_PORT_GEAR" Type="SWITCHsim" Comment="" x="9000.0" y="-2875.0">
+					<Parameter Name="address" Value="127.0.0.1"/>
+					<Parameter Name="port" Value="62501"/>
+					<Parameter Name="params" Value="3"/>
+					<Parameter Name="TI" Value="TQR1.1"/>
+				</FB>
+				<FB Name="RETRACT_STARBOARD_GEAR" Type="SWITCHsim" Comment="" x="11250.0" y="-2875.0">
+					<Parameter Name="address" Value="127.0.0.1"/>
+					<Parameter Name="port" Value="62501"/>
+					<Parameter Name="params" Value="4"/>
+					<Parameter Name="TI" Value="TQR2.1"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="E_CYCLE.EO" Destination="Dectect_Set_Switch_UP.READ_GL_STATUS" Comment="" dx1="75.0" dx2="75.0" dy="-412.5"/>
+					<Connection Source="E_CYCLE.EO" Destination="Dectect_Set_Switch_Down.READ_GL_STATUS" Comment="" dx1="75.0" dx2="75.0" dy="1937.5"/>
+					<Connection Source="Dectect_Set_Switch_UP.CNF_SET_STATUS" Destination="E_SWITCH_UP_COMFIRM.EI" Comment="" dx1="806.25"/>
+					<Connection Source="START.COLD" Destination="E_CYCLE.START" Comment="" dx1="281.25"/>
+					<Connection Source="START.COLD" Destination="Dectect_Set_Switch_Down.INIT" Comment="" dx1="687.5"/>
+					<Connection Source="START.COLD" Destination="Dectect_Set_Switch_UP.INIT" Comment="" dx1="668.75"/>
+					<Connection Source="START.WARM" Destination="Dectect_Set_Switch_UP.INIT" Comment="" dx1="818.75"/>
+					<Connection Source="START.WARM" Destination="Dectect_Set_Switch_Down.INIT" Comment="" dx1="631.25"/>
+					<Connection Source="START.WARM" Destination="E_CYCLE.START" Comment="" dx1="450.0"/>
+					<Connection Source="START.STOP" Destination="E_CYCLE.STOP" Comment="" dx1="537.5"/>
+					<Connection Source="E_CYCLE.EO" Destination="LGCS_MAIN_CONTROLLER.CYCLE" Comment="" dx1="550.0"/>
+					<Connection Source="E_SWITCH_UP_COMFIRM.EO1" Destination="LGCS_MAIN_CONTROLLER.CMD_UP_COMFIRM" Comment="" dx1="525.0"/>
+					<Connection Source="E_SWITCH_DOWN_CONFIRM.EO1" Destination="LGCS_MAIN_CONTROLLER.CMD_DOWN_COMFIRM" Comment="" dx1="875.0"/>
+					<Connection Source="START.COLD" Destination="LGCS_MAIN_CONTROLLER.INIT" Comment="" dx1="4200.0"/>
+					<Connection Source="START.WARM" Destination="LGCS_MAIN_CONTROLLER.INIT" Comment="" dx1="4381.25"/>
+					<Connection Source="Dectect_Set_Switch_Down.CNF_SET_STATUS" Destination="E_SWITCH_DOWN_CONFIRM.EI" Comment="" dx1="812.5"/>
+					<Connection Source="E_SWITCH_DOWN_CONFIRM.EO1" Destination="LOWER_PORT_GEAR.READ" Comment="" dx1="75.0" dx2="75.0" dy="750.0"/>
+					<Connection Source="E_SWITCH_DOWN_CONFIRM.EO1" Destination="LOWER_STARBOARD_GEAR.READ" Comment="" dx1="750.0"/>
+					<Connection Source="E_SWITCH_UP_COMFIRM.EO1" Destination="RETRACT_PORT_GEAR.READ" Comment="" dx1="925.0"/>
+					<Connection Source="E_SWITCH_UP_COMFIRM.EO1" Destination="RETRACT_STARBOARD_GEAR.READ" Comment="" dx1="2112.5"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="Dectect_Set_Switch_UP.in" Destination="E_SWITCH_UP_COMFIRM.G" Comment="" dx1="643.75"/>
+					<Connection Source="Dectect_Set_Switch_Down.in" Destination="E_SWITCH_DOWN_CONFIRM.G" Comment="" dx1="812.5"/>
+				</DataConnections>
+			</FBNetwork>
+		</Resource>
+	</Device>
+	<Mapping From="LandingGearApp.Dectect_Set_Switch_UP" To="FORTE_PC.EMB_RES.Dectect_Set_Switch_UP"/>
+	<Mapping From="LandingGearApp.Dectect_Set_Switch_Down" To="FORTE_PC.EMB_RES.Dectect_Set_Switch_Down"/>
+	<Mapping From="LandingGearApp.E_CYCLE" To="FORTE_PC.EMB_RES.E_CYCLE"/>
+	<Mapping From="LandingGearApp.E_SWITCH_UP_COMFIRM" To="FORTE_PC.EMB_RES.E_SWITCH_UP_COMFIRM"/>
+	<Mapping From="LandingGearApp.E_SWITCH_DOWN_CONFIRM" To="FORTE_PC.EMB_RES.E_SWITCH_DOWN_CONFIRM"/>
+	<Mapping From="LandingGearApp.LGCS_MAIN_CONTROLLER" To="FORTE_PC.EMB_RES.LGCS_MAIN_CONTROLLER"/>
+	<Mapping From="LandingGearApp.LOWER_PORT_GEAR" To="FORTE_PC.EMB_RES.LOWER_PORT_GEAR"/>
+	<Mapping From="LandingGearApp.LOWER_STARBOARD_GEAR" To="FORTE_PC.EMB_RES.LOWER_STARBOARD_GEAR"/>
+	<Mapping From="LandingGearApp.RETRACT_PORT_GEAR" To="FORTE_PC.EMB_RES.RETRACT_PORT_GEAR"/>
+	<Mapping From="LandingGearApp.RETRACT_STARBOARD_GEAR" To="FORTE_PC.EMB_RES.RETRACT_STARBOARD_GEAR"/>
+	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="2125.0" y="875.0" dx1="1875.0">
+		<Attribute Name="Color" Type="STRING" Value="174,206,113" Comment="color"/>
+	</Segment>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC" Comment="">
+	</Link>
+</System>
